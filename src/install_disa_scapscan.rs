@@ -2,7 +2,7 @@ use std::process::Command;
 use std::path::Path;
 
 pub fn check_and_install_scap() {
-    let scap_tool_path = r"C:\Program Files\SCAP Scanner\scapscanner.exe"; // Path where SCAP scanner is usually installed
+    let scap_tool_path = r"C:\SCAP_Tool\cscc.exe"; // Path where SCAP scanner is usually installed
     let scap_installer_dir = "src/scc-5.10.1_Windows"; // Directory containing the SCAP installation files
     let scap_installer_path = format!("{}/SCC_5.10.1_Windows_Setup.exe", scap_installer_dir);
 
