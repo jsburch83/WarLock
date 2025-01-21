@@ -1,0 +1,23 @@
+# Ignore SCAP Scans tools
+src/scc-5.10.1_Windows/
+
+# Ignore compiled files
+target/
+*.rmeta
+*.rlib
+
+# Ignore logs and backups
+*.log
+*.bak
+*.tmp
+
+# Ignore dependency lock (optional, see explanation above)
+Cargo.lock
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore build artifacts
+*.dSYM
+*.rs.bk
