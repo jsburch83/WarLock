@@ -1,0 +1,33 @@
+use dotenv::dotenv;
+use std::env;
+use reqwest::blocking::Client;
+use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn upload_file_to_api(file_path: &Path) {
+    dotenv().ok(); // Load .env file
+
+    let api_key = env::var("OPENAI_API_KEY").expect("API key not found");
+    let client = Client::new();
+    let url = "https://api.openai.com/v1/files";
+
+    if let Ok(mut file) = File::open(file_path) {
+        let mut content = Vec::new();
+        if file.read_to_end(&mut content).is_ok() {
+            let response = client.post(url)
+                .bearer_auth(api_key)
+                .body(content)
+                .send();
+
+            match response {
+                Ok(resp) => println!("File uploaded successfully. Status: {}", resp.status()),
+                Err(e) => eprintln!("Failed to upload file: {}", e),
+            }
+        } else {
+            eprintln!("Failed to read the file content.");
+        }
+    } else {
+        eprintln!("Unable to open the SCAP results file.");
+    }
+}
