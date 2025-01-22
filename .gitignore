@@ -21,3 +21,6 @@ Cargo.lock
 # Ignore build artifacts
 *.dSYM
 *.rs.bk
+
+# Ignore api keys
+.env
