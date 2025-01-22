@@ -1,14 +1,15 @@
-//! Revision: 48
+//! Revision: 49
 mod installed_apps;
 mod network_connections;
 mod system_info;
 mod install_disa_scapscan;
 mod scap_scan_cli;
+mod upload_scap_results;
 
 use log::{info, LevelFilter};
 use env_logger;
 use std::fs::File;
-use std::io::Write;
+use std::io::{Write, stdin};
 
 fn main() {
     // Initialize the logger
@@ -23,6 +24,7 @@ fn main() {
     let system_report = system_info::gather_system_info();
     let installed_apps_report = installed_apps::gather_installed_apps();
     let network_report = network_connections::gather_network_connections();
+    
 
     let mut report = String::new();
     report.push_str(&system_report);
@@ -35,4 +37,14 @@ fn main() {
     file.write_all(report.as_bytes()).expect("Unable to write data");
 
     info!("System report generated: system_report.html");
+
+    // Prompt the user for uploading SCAP results
+    println!("Do you want to upload SCAP results? (yes/no): ");
+    let mut input = String::new();
+    stdin().read_line(&mut input).expect("Failed to read input");
+    if input.trim().to_lowercase() == "yes" {
+        upload_scap_results::upload_non_compliant_results();
+    } else {
+        println!("SCAP results upload skipped.");
+    }
 }
